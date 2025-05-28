@@ -1,5 +1,5 @@
 <?php
-class UserController{
+class UserModel{
     private $conn;
     const TABLE = "users";
     public function __construct(string $host,string $user,string $password,string $database,int $port){
@@ -8,9 +8,8 @@ class UserController{
             die("Ошибка подключения: ".$this->conn->connect_error);
         }
     }
-    public function createUser(string $name,string $password,string $email){
+    public function createUser(string $name,string $hash_password,string $email){
         $stmt = $this->conn->prepare("INSERT INTO ".self::TABLE." (name,hash_password,email) VALUES(?,?,?)");
-        $hash_password = password_hash($password,PASSWORD_DEFAULT);
         $stmt->bind_param("sss",$name,$hash_password,$email);
         $stmt->execute();
         $stmt->close();
@@ -34,6 +33,13 @@ class UserController{
         $stmt->bind_param("i",$id);
         $stmt->execute();
         $stmt->close();
+    }
+    public function checkEmail(string $email){
+        $stmt = $this->conn->prepare("SELECT id FROM ".self::TABLE." WHERE email = ?;");
+        $stmt->bind_param("s",$email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return (bool) $result->fetch_assoc();
     }
     function __destruct(){
         $this->conn->close();
