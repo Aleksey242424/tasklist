@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION["auth"])){
+if (isset($_SESSION["userId"])){
     header("Location:http://localhost:7777/","true","301");
     exit();
 }?>
@@ -9,7 +9,7 @@ if (isset($_SESSION["auth"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/style.css">
     <script src="../js/auth.js" defer></script>
     <title>Task List</title>
 </head>

@@ -20,6 +20,10 @@ class UserController{
         }
         $this->setSession($userData["id"]);
     }
+    public function logout(){
+        session_unset();
+        header("Location: views/auth.php");
+    }
     private function validateCredentials(string $name,string $email,string $password):void{
         $this->validateName($name);
         $this->validateEmail($email);
@@ -50,6 +54,6 @@ class UserController{
         return $this->userModel->checkEmail($email);
     }
     private function setSession($id){
-        $_SESSION["auth"] = $id;
+        $_SESSION["userId"] = $id;
     }
 }
