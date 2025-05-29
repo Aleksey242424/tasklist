@@ -18,7 +18,12 @@ if (isset($_SESSION["auth"])){
     require_once __DIR__ . "/../../src/controllers/userController.php";
     $userController = new UserController();
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        $userController->create($_POST["username"],$_POST["password"],$_POST["email"]);
+        if (isset($_POST["registration"])){
+            $userController->create($_POST["username"],$_POST["password"],$_POST["email"]);
+        }else if(isset($_POST["login"])){
+            $userController->aunthenticate($_POST["name"],$_POST["password"]);
+        }
+        header("Location: auth.php");
     }
     ?>
     <div class="container">
@@ -35,20 +40,20 @@ if (isset($_SESSION["auth"])){
                     <div class="form-group">
                         <input type="password" name="password" placeholder="Пароль" required>
                     </div>
-                    <button type="submit">Зарегистрироваться</button>
+                    <button type="submit" name="registration">Зарегистрироваться</button>
                 </form>
                 <p id="sign-in" style="cursor: pointer;">Войти</p>
             </div>
             <div class="form-box" id="login" style="display: none;">
                 <h2>Вход</h2>
-                <form action="login.php" method="POST">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="text" name="name" placeholder="Имя пользователя" required>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" placeholder="Пароль" required>
                     </div>
-                    <button type="submit">Войти</button>
+                    <button type="submit" name="login">Войти</button>
                 </form>
                 <p id="sign-up" style="cursor: pointer;">Зарегистрироваться</p>
             </div>
