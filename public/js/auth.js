@@ -16,17 +16,18 @@ registrationButton.addEventListener('click',(e)=>{
     registrationForm.style.display = "block";
 });
 function validatePassword(password){
+    const hasLowerCase = /[a-z]/.test(password);
     const hasUpperCase = /[A-Z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?"{}|<>]/.test(password);
     const hasNumber = /\d/.test(password);
-    return hasUpperCase && hasSpecialChar && hasNumber;
+    return hasUpperCase && hasSpecialChar && hasNumber && hasLowerCase;
 }
 passwordInput.addEventListener("input",(e)=>{
     const errorMessage = document.querySelector("#error-message");
     errorMessage.style.color = "red";
     if (!validatePassword(document.querySelector("#password").value)){
         errorMessage.style.display = "block";
-        errorMessage.textContent = "Пароль должен содержать: цифры,большие латинские буквы,специальные символы";
+        errorMessage.textContent = "Пароль должен содержать: цифры,большие и маленькие латинские буквы,специальные символы";
         registerButton.style.backgroundColor ="rgba(92, 184, 92, 0.83)";
         registerButton.setAttribute("disabled","");
     }else if(document.querySelector("#password").value.length<8){
