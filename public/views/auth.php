@@ -38,9 +38,10 @@ if (isset($_SESSION["userId"])){
                         <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" placeholder="Пароль" required>
+                        <input type="password" name="password" id="password" placeholder="Пароль" required>
+                        <span id="error-message"></span>
                     </div>
-                    <button type="submit" name="registration">Зарегистрироваться</button>
+                    <button type="submit" name="registration" disabled id="register-button">Зарегистрироваться</button>
                 </form>
                 <p id="sign-in" style="cursor: pointer;">Войти</p>
             </div>

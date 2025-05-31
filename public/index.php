@@ -46,7 +46,7 @@ if (!isset($_SESSION["userId"])){
 
             <div class="tasks">
                 <?php
-                $allTasks = $taskController->getTasks($_SESSION["auth"]);
+                $allTasks = $taskController->getTasks($_SESSION["userId"]);
                 foreach($allTasks as $task){
                     echo"
                         <div class=\"task-item\">

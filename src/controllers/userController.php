@@ -48,7 +48,14 @@ class UserController{
         if (!isset($password) or strlen($password)<8){
             throw new InvalidArgumentException("Пароль должен быть не менее 8 символов");
         }
-        return true;
+        if(preg_match("/[a-z]/",$password) and 
+            preg_match("/[A-Z]/",$password) and
+            preg_match("/[0-9]/",$password) and
+            preg_match("/[\W_]/",$password)){
+                return true;
+            }else{
+                throw new InvalidArgumentException("Пароль должен содержать: большие латинские буквы,цифры,специальные символы.");
+            }
     }
     private function emailExists(string $email):bool{
         return $this->userModel->checkEmail($email);
